@@ -1,2 +1,6 @@
 **/lib
 *.DS_Store
+*.pyc
+*.cfg
+*.flask*
+**/venv/bin
