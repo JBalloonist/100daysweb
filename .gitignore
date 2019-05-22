@@ -4,3 +4,4 @@
 *.cfg
 *.flask*
 **/venv/bin
+**/.vscode
