@@ -25,8 +25,17 @@ def quote_new(request):
     return render(request, 'quotes/quote_form.html', {'form': form})
 
 
-def quote_edit(parameter_list, pk):
-    pass
+def quote_edit(request, pk):
+    quote = get_object_or_404(Quote, pk=pk)
+    form = QuoteForm(request.POST or None, instance=quote)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Updated quote')
+        return redirect('quotes:quote_list')
+
+    return render(request, 'quotes/quote_form.html', {'quote': quote,
+                                                       'form': form})
 
 
 def quote_delete(request, pk):
