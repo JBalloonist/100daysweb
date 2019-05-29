@@ -9,13 +9,20 @@ def quote_list(request):
     quotes = Quote.objects.all()
     return render(request, 'quotes/quote_list.html', {'quotes': quotes})
 
-def quote_detail(request):
+def quote_detail(request, pk):
     quote = get_object_or_404(Quote, pk=pk)
     return render(request, 'quotes/quote_detail.html', {'quote': quote})
 
 
-def quote_new(request, pk):
-    pass
+def quote_new(request):
+    form = QuoteForm(request.POST or None)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Added quote')
+        return redirect('quotes:quote_list')
+
+    return render(request, 'quotes/quote_form.html', {'form': form})
 
 
 def quote_edit(parameter_list, pk):
