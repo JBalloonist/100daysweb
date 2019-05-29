@@ -10,7 +10,10 @@ def quote_list(request):
     return render(request, 'quotes/quote_list.html', {'quotes': quotes})
 
 def quote_detail(request):
-    pass
+    try:
+        Quote.objects.get(pk=pk)
+    except Quote.DoesNotExist:
+        raise Http404
 
 
 def quote_new(request, pk):
