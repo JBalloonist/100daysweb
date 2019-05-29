@@ -39,4 +39,11 @@ def quote_edit(request, pk):
 
 
 def quote_delete(request, pk):
-    pass
+    quote = get_object_or_404(Quote, pk=pk)
+
+    if request.method == 'POST':
+        quote.delete()
+        messages.success(request, 'Deleted quote')
+        return redirect('quotes:quote_list')
+
+    return render(request, 'quotes/quote_delete.html', {'quote': quote})
