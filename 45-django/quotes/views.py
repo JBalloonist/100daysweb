@@ -11,6 +11,7 @@ def quote_list(request):
 
 def quote_detail(request):
     quote = get_object_or_404(Quote, pk=pk)
+    return render(request, 'quotes/quote_detail.html', {'quote': quote})
 
 
 def quote_new(request, pk):
