@@ -14,7 +14,7 @@
     </thead>
     <tbody>
         <!-- for class based views rename this queryset to quote_list -->
-        {% for quote in quotes %}
+        {% for quote in quote_list %}
         <tr>
           <td><a href="{% url "quotes:quote_detail" quote.id %}">{{ quote.quote }}</a></td>
           <td>{{ quote.author }}</td>

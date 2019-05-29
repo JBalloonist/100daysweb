@@ -1,49 +1,31 @@
-from django.contrib import messages
-from django.shortcuts import get_object_or_404, render, redirect
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 from .models import Quote
 from .forms import QuoteForm
 
 
-def quote_list(request):
-    quotes = Quote.objects.all()
-    return render(request, 'quotes/quote_list.html', {'quotes': quotes})
-
-def quote_detail(request, pk):
-    quote = get_object_or_404(Quote, pk=pk)
-    return render(request, 'quotes/quote_detail.html', {'quote': quote})
+class QuoteList(ListView):
+    model = Quote
 
 
-def quote_new(request):
-    form = QuoteForm(request.POST or None)
-
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'Added quote')
-        return redirect('quotes:quote_list')
-
-    return render(request, 'quotes/quote_form.html', {'form': form})
+class QuoteView(DetailView):
+    model = Quote
 
 
-def quote_edit(request, pk):
-    quote = get_object_or_404(Quote, pk=pk)
-    form = QuoteForm(request.POST or None, instance=quote)
-
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'Updated quote')
-        return redirect('quotes:quote_list')
-
-    return render(request, 'quotes/quote_form.html', {'quote': quote,
-                                                       'form': form})
+class QuoteCreate(CreateView):
+    model = Quote
+    form_class = QuoteForm
+    success_url = reverse_lazy('quotes:quote_list')
 
 
-def quote_delete(request, pk):
-    quote = get_object_or_404(Quote, pk=pk)
+class QuoteUpdate(UpdateView):
+    model = Quote
+    form_class = QuoteForm
+    success_url = reverse_lazy('quotes:quote_list')
 
-    if request.method == 'POST':
-        quote.delete()
-        messages.success(request, 'Deleted quote')
-        return redirect('quotes:quote_list')
 
-    return render(request, 'quotes/quote_delete.html', {'quote': quote})
+class QuoteDelete(DeleteView):
+    model = Quote
+    success_url = reverse_lazy('quotes:quote_list')
