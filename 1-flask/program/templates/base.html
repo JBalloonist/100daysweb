@@ -13,7 +13,19 @@
       <div class="mui-panel"> Menu Bar - 
         <button class="mui-btn mui-btn--raised"><a href="/index">Home</a></button>
         <button class="mui-btn mui-btn--raised"><a href="/100Days">100 Days</a></button>
+        <button class="mui-btn mui-btn--raised"><a href="/store">Store</a></button>
+        <button class="mui-btn mui-btn--raised"><a href="/login">Login</a></button>
       </div>
+      <hr>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+      {% endif %}
+      {% endwith %}
       {% block content %}{% endblock %}
   </body>
 </html>
